@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louies Angelo Mesia • Interactive Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Reset & Core Architecture --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            padding: 40px 20px;
+            letter-spacing: -0.022em;
+            line-height: 1.47059;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Header Section --- */
+        header {
+            max-width: 1160px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .header-title h1 {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.041em;
+            color: #1d1d1f;
+            line-height: 1.1;
+        }
+
+        .header-title p {
+            font-size: 19px;
+            color: #86868b;
+            font-weight: 500;
+            margin-top: 6px;
+            letter-spacing: -0.024em;
+            line-height: 1.3;
+        }
+
+        .header-contact {
+            text-align: right;
+            font-size: 14px;
+            color: #86868b;
+            line-height: 1.6;
+        }
+
+        .header-contact a {
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: text-decoration 0.2s ease;
+        }
+
+        .header-contact a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Bento Grid Framework --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            grid-auto-flow: row dense;
+        }
+
+        /* --- Base Widget / Card Styling --- */
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.015);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* macOS/tvOS Smooth Interactive Hover States */
+        .bento-card:hover {
+            transform: scale(1.012);
+            box-shadow: 0 12px 38px rgba(0, 0, 0, 0.07);
+        }
+
+        /* --- Grid Item Modifiers --- */
+        .w-2 { grid-column: span 2; }
+        .w-3 { grid-column: span 3; }
+        .h-2 { grid-row: span 2; }
+
+        /* --- Semantic Typography Hierarchy --- */
+        .card-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #86868b;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.026em;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .accent-text {
+            color: #0071e3;
+        }
+
+        /* --- Image / Visual Tile Component --- */
+        .image-tile {
+            padding: 0;
+            background: #e8e8ed;
+            position: relative;
+            min-height: 240px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+            transition: background 0.3s ease;
+        }
+
+        .image-tile:hover .image-placeholder {
+            background: linear-gradient(135deg, #e8e8ed 0%, #d2d2d7 100%);
+        }
+
+        .image-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+
+        .image-caption {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.01em;
+        }
+
+        .image-subcaption {
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 4px;
+        }
+
+        /* --- Specific Component Content Rules --- */
+        
+        /* Summary Component */
+        .summary-text {
+            font-size: 19px;
+            line-height: 1.5;
+            color: #1d1d1f;
+            font-weight: 400;
+        }
+
+        /* Competencies & Metrics Grid */
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: auto;
+        }
+
+        .metric-item {
+            background: #f5f5f7;
+            padding: 16px;
+            border-radius: 16px;
+        }
+
+        .metric-val {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0071e3;
+            letter-spacing: -0.03em;
+        }
+
+        .metric-lbl {
+            font-size: 12px;
+            color: #86868b;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* Skills Tag Cloud */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .tag {
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .bento-card:hover .tag {
+            background: #e8e8ed;
+        }
+
+        /* Experience timeline lists */
+        .timeline-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline-item {
+            border-left: 2px solid #e8e8ed;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .timeline-meta {
+            font-size: 13px;
+            color: #86868b;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .timeline-role {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .timeline-desc {
+            font-size: 13.5px;
+            color: #515154;
+            margin-top: 6px;
+            line-height: 1.45;
+        }
+
+        /* Grouped Competency Layout */
+        .competency-box {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comp-section h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 6px;
+        }
+
+        .comp-section p {
+            font-size: 13px;
+            color: #86868b;
+            line-height: 1.4;
+        }
+
+        /* Clean Bullet Configuration */
+        .clean-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .clean-list li {
+            font-size: 14px;
+            color: #1d1d1f;
+            line-height: 1.4;
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .clean-list li::before {
+            content: "•";
+            color: #0071e3;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .list-subtext {
+            display: block;
+            font-size: 12px;
+            color: #86868b;
+            margin-top: 1px;
+        }
+
+        /* --- Custom Dynamic Background Card --- */
+        .dark-card {
+            background: #1d1d1f;
+            border: none;
+        }
+
+        .dark-card .card-title {
+            color: #ffffff;
+        }
+
+        .dark-card .timeline-role {
+            color: #ffffff;
+        }
+
+        .dark-card .timeline-desc {
+            color: #a1a1a6;
+        }
+
+        .dark-card .timeline-meta {
+            color: #86868b;
+        }
+
+        .dark-card .timeline-item {
+            border-left-color: #323236;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 0 20px 0;
+            font-size: 13px;
+            color: #86868b;
+        }
+
+        /* --- Responsive Design Media Queries --- */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .w-3, .w-2 {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 734px) {
+            body {
+                padding: 24px 12px;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 24px;
+                padding: 0 8px;
+            }
+            .header-contact {
+                text-align: left;
+            }
+            .header-title h1 {
+                font-size: 32px;
+            }
+            .bento-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .w-3, .w-2, .h-2 {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+            .bento-card {
+                padding: 24px;
+            }
+            .image-tile {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>Louies Angelo Mesia</h1>
+                <p> Technological Innovation, Governance Execution, and Public Relations</p>
+            </div>
+        </header>
+
+        <main class="bento-grid">
+
+            <section class="bento-card w-3">
+                <div>
+                    <span class="card-label">Executive Blueprint</span>
+                    <h2 class="card-title">A synchronized ecosystem combining rigorous technology implementation, elite organizational system execution, and comprehensive institutional community relation management.</h2>
+                </div>
+                <p class="summary-text" style="margin-top: 16px; color: #515154;">
+                    Leveraging verified technical competencies in cloud environments, infrastructure defenses, and system analysis, paired natively with an impactful track record managing student body networks and deploying widespread public service initiatives.
+                </p>
+            </section>
+
+		<div class="bento-card image-tile">
+   			 <img src="portrait.jpg" alt="Louies Angelo Mesia Portrait" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+		</div>
+
+            <section class="bento-card w-2">
+                <div>
+                    <span class="card-label">Education</span>
+                    <h2 class="card-title">Academic History</h2>
+                    <ul class="timeline-list" style="margin-top: 24px;">
+                        <li class="timeline-item">
+                            <p class="timeline-meta">2021 — 2025 · Bachelor of Science</p>
+                            <h3 class="timeline-role">Information Technology</h3>
+                            <p class="timeline-desc" style="font-weight: 500; color: #1d1d1f;">University of the Assumption</p>
+                            <p class="timeline-desc">Graduated Magna cum Laude. Institutional Honors: Most Outstanding Student in the Field of Leadership &amp; PSITE IT Excellence Awardee.</p>
+                            <div class="tag-cloud" style="margin-top: 8px;">
+                                <span class="tag">8-Semester Streak President's Lister</span>
+                                <span class="tag">Global Academic Immersion</span>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <p class="timeline-meta">2019 — 2021 · Senior High School Diploma</p>
+                            <h3 class="timeline-role">Science, Technology, Engineering, and Mathematics (STEM) Strand</h3>
+                            <p class="timeline-desc" style="font-weight: 500; color: #1d1d1f;">Pampanga State University <span style="font-size:11px; color:#86868b; font-weight:normal;">(formerly Don Honorio Ventura State University)</span></p>
+                            <p class="timeline-desc">Graduated With High Honors, establishing technical baselines.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #f5f5f7;">
+                    <p style="font-size: 11px; color: #86868b; font-weight: 600; text-transform: uppercase;">International Exchange Facilities</p>
+                    <p style="font-size: 13px; color: #515154; margin-top: 4px;">Hansung University · Woosong University · Solbridge International School of Business (South Korea)</p>
+                </div>
+            </section>
+
+            <section class="bento-card w-2">
+                <div>
+                    <span class="card-label">Core Matrix</span>
+                    <h2 class="card-title">Three Impactful Competencies</h2>
+                </div>
+                <div class="competency-box">
+                    <div class="comp-section">
+                        <h4>Innovation</h4>
+                        <p>Certified foundations in Network Defense (NDE), Ethical Hacking (EHE), Digital Forensics (DFE), Cisco CCNA configurations, and systemic data analysis. Proficient in engineering secure cloud pipelines, database tools, web environments, and automated information architectures.</p>
+                    </div>
+                    <div class="comp-section" style="border-top: 1px solid #f5f5f7; padding-top: 12px;">
+                        <h4>Execution</h4>
+                        <p>Over 3 years of experience orchestrating student body governments, auditing operational frameworks, governing organizational budgets, managing high-profile corporate trainings, and directing large scale institutional structures under pressure.</p>
+                    </div>
+                    <div class="comp-section" style="border-top: 1px solid #f5f5f7; padding-top: 12px;">
+                        <h4>Relation</h4>
+                        <p>National championship titles in broadcast presentation. Highly capable cross-functional public speaker, corporate content strategist, and philanthropy coordinator establishing strong relational bonds across multiple institutions and public media networks.</p>
+                    </div>
+                </div>
+            </section>
+
+		<div class="bento-card image-tile">
+   			<img src="south-korea-conference.jpg" alt="International Conference in South Korea" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+		</div>
+
+            <section class="bento-card w-2 dark-card">
+                <div>
+                    <span class="card-label" style="color: #86868b;">Corporate Tenure</span>
+                    <h2 class="card-title">Professional Technical Experience</h2>
+                    <ul class="timeline-list" style="margin-top: 20px;">
+                        <li class="timeline-item">
+                            <p class="timeline-meta">August 2025 — June 2026 · Clark Development Corporation</p>
+                            <h3 class="timeline-role">HR Administrative Assistant &amp; Technical Support (HR Division)</h3>
+                            <p class="timeline-desc">Engineered and implemented a dynamic web-based Competency Assessment Management System optimizing core employee tracking data. Produced administrative communications (IOMs/CSWs), automated internal office reporting, and orchestrated technology setups for institutional corporate trainings.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <p class="timeline-meta">January 2025 — May 2025 · Clark Development Corporation</p>
+                            <h3 class="timeline-role">Information Technology Support Specialist (IT Department)</h3>
+                            <p class="timeline-desc">Troubleshot enterprise server infrastructure, managed LAN topology configurations, firewalls, active access points, and hardware components. Formulated system analytics reporting aligned to ITSM ticket logs and conducted structural data restoration procedures independently across multiple departments.</p>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="bento-card">
+                <div>
+                    <span class="card-label">Telemetry</span>
+                    <h2 class="card-title">By the Numbers</h2>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric-item">
+                        <p class="metric-val">8/8</p>
+                        <p class="metric-lbl">Semesters on President's List</p>
+                    </div>
+                    <div class="metric-item">
+                        <p class="metric-val">3+</p>
+                        <p class="metric-lbl">Years of Executive Governance</p>
+                    </div>
+                    <div class="metric-item">
+                        <p class="metric-val">20+</p>
+                        <p class="metric-lbl">IT Credentials Earned</p>
+                    </div>
+                    <div class="metric-item">
+                        <p class="metric-val">1st</p>
+                        <p class="metric-lbl">National Media Titles</p>
+                    </div>
+                </div>
+            </section>
+
+		<div class="bento-card image-tile">
+    			<img src="broadcasting-championship.jpg" alt="Radio Broadcasting National Championship" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+		</div>
+
+            <section class="bento-card w-2">
+                <div>
+                    <span class="card-label">Governance Track</span>
+                    <h2 class="card-title">Organizational Leadership &amp; Affiliations</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 16px;">
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">UA Central Student Council</h3>
+                        <p style="font-size: 11px; color: #0071e3; font-weight: 600; margin-bottom: 6px;">President (2025) · VP (2024) · PIO (2022-2023)</p>
+                        <p style="font-size: 13px; color: #515154; line-height: 1.4;">Led and audited institutional student body government networks. Formulated digital communications campaigns and publicity strategies across multi-platform networks.</p>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">SSITE - UA Chapter</h3>
+                        <p style="font-size: 11px; color: #0071e3; font-weight: 600; margin-bottom: 6px;">PRO (2024-2025) · President (2023-2024) · VP Internal · Development Coord.</p>
+                        <p style="font-size: 13px; color: #515154; line-height: 1.4;">Directed technical student development bootcamps and computing seminars. Linked student developers with IT department practitioners and technical boards.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #f5f5f7; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #515154;">
+                    <p><strong>REGINA Student Publication:</strong> Head Broadcaster (2024–2025) | Managing Editor (2023–2024) | Features Editor (2022–2023)</p>
+                    <p><strong>UA Commission on Student Elections (COMSEC):</strong> Co-Chairperson (A.Y. 2022–2023) | CITCLS Representative (A.Y. 2021–2022)</p>
+                    <p><strong>Ingat nang Asuncion:</strong> Active Member (A.Y. 2022–2023 and A.Y. 2024–2025)</p>
+                </div>
+            </section>
+
+            <section class="bento-card w-2">
+                <div>
+                    <span class="card-label">Technical Proofs</span>
+                    <h2 class="card-title">Verified Industry Certifications</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px;">
+                        <div>
+                            <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">EC-Council Credentials</h3>
+                            <ul class="clean-list">
+                                <li>Network Defense Essentials (NDE)</li>
+                                <li>Ethical Hacking Essentials (EHE)</li>
+                                <li>Digital Forensics Essentials (DFE)</li>
+                                <li>Cloud Computing Introduction</li>
+                                <li><span style="font-weight:500;">Specialist Track:</span> SQL Injection Attacks, Android Bug Bounty Hunting, Dark Web, Cybersecurity for Businesses.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #1d1d1f;">Cisco Networking Academy</h3>
+                            <ul class="clean-list">
+                                <li>CCNA: Introduction to Networks</li>
+                                <li>CCNA: Switching, Routing, &amp; Wireless Essentials</li>
+                                <li>Introduction to Cybersecurity</li>
+                                <li><span style="font-weight:500;">Data &amp; Language Stack:</span> Data Analytics, Data Science, Python Essentials 1, JavaScript Essentials 1.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bento-card">
+                <div>
+                    <span class="card-label">Tools &amp; Stack</span>
+                    <h2 class="card-title">Competency Inventory</h2>
+                </div>
+                <div>
+                    <p style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; margin-bottom: 6px;">Programming &amp; Systems</p>
+                    <div class="tag-cloud" style="margin-bottom: 16px;">
+                        <span class="tag">HTML5 / CSS3</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">SQL</span>
+                    </div>
+
+                    <p style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; margin-bottom: 6px;">Creative &amp; Hardware</p>
+                    <div class="tag-cloud">
+                        <span class="tag">Microsoft Office Specialist</span>
+                        <span class="tag">Sony Vegas Pro</span>
+                        <span class="tag">Adobe Photoshop</span>
+                        <span class="tag">Illustrator</span>
+                        <span class="tag">Raspberry Pi</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bento-card w-3">
+                <div>
+                    <span class="card-label">Laurels</span>
+                    <h2 class="card-title">Notable Awards &amp; Recognitions</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 12px;">
+                    <ul class="clean-list">
+                        <li>
+                            <strong>Global Nominee</strong>
+                            <span class="list-subtext">NASA International Space Apps Challenge</span>
+                        </li>
+                        <li>
+                            <strong>Research Presenter</strong>
+                            <span class="list-subtext">International Conference on IT Education (South Korea)</span>
+                        </li>
+                        <li>
+                            <strong>National Finalist</strong>
+                            <span class="list-subtext">Microsoft Office Specialist Philippine Championship</span>
+                        </li>
+                    </ul>
+                    <ul class="clean-list">
+                        <li>
+                            <strong>Best Paper Awardee</strong>
+                            <span class="list-subtext">CITCLS Research Colloquium</span>
+                        </li>
+                        <li>
+                            <strong>2nd Runner-Up: Technical Writing</strong>
+                            <span class="list-subtext">PSITE Central Luzon Competition Matrix</span>
+                        </li>
+                        <li>
+                            <strong>2nd Runner-Up: IT Marketing Plan</strong>
+                            <span class="list-subtext">IRCITE Regional Competition Framework</span>
+                        </li>
+                    </ul>
+                    <ul class="clean-list">
+                        <li>
+                            <strong>GAWAD ANAK OFW Awardee</strong>
+                            <span class="list-subtext">Archdiocese of San Fernando, Pampanga</span>
+                        </li>
+                        <li>
+                            <strong>Mr. University of the Assumption-Scientia</strong>
+                            <span class="list-subtext">University Pageant Titleholder (2023)</span>
+                        </li>
+                        <li>
+                            <strong>Most Outstanding Student</strong>
+                            <span class="list-subtext">NSTP Social Mobilization Campaign (A.Y. 2021–2022)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #f5f5f7; font-size: 12px; color: #86868b;">
+                    <strong>Competitive Standings:</strong> 7th Place News Broadcasting (Young Journalist Congress) · Participant tracks: RAITE Hackathon Challenge, Video Editing, Quiz Bee.
+                </div>
+            </section>
+
+		<div class="bento-card image-tile">
+    			<img src="civic-engagement.jpg" alt="IT Serves Civic Initiative" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;">
+		</div>
+
+            <section class="bento-card">
+                <div>
+                    <span class="card-label">Altruism</span>
+                    <h2 class="card-title">Community &amp; Civic Engagements</h2>
+                </div>
+                <ul class="clean-list">
+                    <li>
+                        <strong>Project Proponent, IT Serves</strong>
+                        <span class="list-subtext">Deployed educational toys and multi-set clothing drives to the community of Sitio Tahimik.</span>
+                    </li>
+                    <li>
+                        <strong>Campaign Lead, Environmental Drive</strong>
+                        <span class="list-subtext">Mobilized university-wide pet bottles collection for Bataan Oil Spill containment barriers.</span>
+                    </li>
+                    <li>
+                        <strong>Philanthropy Lead, UACSC</strong>
+                        <span class="list-subtext">Allocated PHP 300,000 structural donation funding academic scholarships for peer students.</span>
+                    </li>
+                    <li>
+                        <strong>PPCRV Electoral Poll Volunteer</strong>
+                        <span class="list-subtext">Rendered verification support ensuring ballot data validation integrity (2021–2022).</span>
+                    </li>
+                    <li>
+                        <strong>Active Ministry Choir Member</strong>
+                        <span class="list-subtext">Sta. Monica de Minalin Parish Catholic Charismatic Youth Choir since 2017.</span>
+                    </li>
+                    <li>
+                        <strong>Welfare Volunteer</strong>
+                        <span class="list-subtext">Supported Noah's Ark Animal Shelter and integrated VMIS feeding program.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="bento-card">
+                <div>
+                    <span class="card-label">Exposures &amp; Broadcasts</span>
+                    <h2 class="card-title">Public Engagements Footprint</h2>
+                </div>
+                
+                <div style="margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid #f5f5f7;">
+                    <p style="font-size: 11px; font-weight: 600; color: #86868b; text-transform: uppercase; margin-bottom: 6px;">Languages Fluent</p>
+                    <div class="tag-cloud">
+                        <span class="tag" style="background:#0071e3; color:#ffffff;">English</span>
+                        <span class="tag" style="background:#0071e3; color:#ffffff;">Filipino</span>
+                        <span class="tag">Kapampangan</span>
+                        <span class="tag">Spanish</span>
+                    </div>
+                </div>
+
+                <ul class="clean-list">
+                    <li>
+                        <strong>CLTV 36 "Nanu Pa Ta" Broadcast Guest</strong>
+                        <span class="list-subtext">Appeared live on television noon show promoting REGINA campus press operations.</span>
+                    </li>
+                    <li>
+                        <strong>Resource Speaker, PodSSITE</strong>
+                        <span class="list-subtext">Delivered technical lecture at Santa Rita College of Pampanga.</span>
+                    </li>
+                    <li>
+                        <strong>External Panel Judge</strong>
+                        <span class="list-subtext">Audited BA Ambassador public speaking metrics at City College CSFP.</span>
+                    </li>
+                    <li>
+                        <strong>UA Senior High Career Speaker</strong>
+                        <span class="list-subtext">Provided technological orientation milestones for incoming cohorts.</span>
+                    </li>
+                    <li>
+                        <strong>Institutional Hosting</strong>
+                        <span class="list-subtext">Master of ceremonies for CITCLS Focus Group Discussions and promotional launch projects.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="bento-card w-3">
+                <div>
+                    <span class="card-label">Knowledge Matrix</span>
+                    <h2 class="card-title">Seminars, Conferences &amp; Symposia</h2>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 16px;">
+                    <div>
+                        <h3 style="font-size: 14px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px;">As the Initiator</h3>
+                        <ul class="clean-list" style="font-size: 13px;">
+                            <li>SSITE: Innovate &amp; Influence <span>(UA Multipurpose Hall)</span></li>
+                            <li>UACSC: Strategic Training Seminar for Incoming Presidents, Secretaries, and Treasurers</li>
+                            <li>SSITE: Programming Tech and UX in the New Normal Webinar</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 14px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px;">Organizing Committee Track</h3>
+                        <ul class="clean-list" style="font-size: 13px;">
+                            <li><span style="font-weight: 500;">Host / Moderator:</span> Cybersecurity and AI Summit (2025) · REGINA: Assumption Outstanding Campus Press Conference (2024).</li>
+                            <li><span style="font-weight: 500;">Logistics Officer:</span> UACSC Seminar for RSO Officers · Youth Under Pressure (Emilio Cinense Gym).</li>
+                            <li><span style="font-weight: 500;">Operations Staff:</span> CEGP Arise Press Congress · SSITE &amp; JPIA Cybersmart Juan Security Track · UA NSTP Voter Empowerment.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 14px; font-weight: 600; color: #1d1d1f; margin-bottom: 8px;">As a Selected Academic Participant</h3>
+                        <ul class="clean-list" style="font-size: 13px;">
+                            <li><span style="font-weight: 500;">Advanced Technology:</span> DICT Startup Bootcamp 101 &amp; 102 · IRCITE International Research Conferences (Bataan &amp; Wesleyan) · Regional Assembly on IT Education (RAITE) · CICTO Career Forum.</li>
+                            <li><span style="font-weight: 500;">Civic &amp; Media Literacy:</span> National Campus Media Conference (Tagaytay) · Young Journalist Press Freedom Congresses · UNISSULA Global Cultural Exchange (Indonesia Track) · DAGYAW Central Luzon Progress Summit · Advancing Catholic Leadership assemblies.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>Minalin, Pampanga, Philippines</p>
+            <p style="margin-top: 6px; font-weight: 500; color: #1d1d1f;">+63-955-846-8358 · louiesangelo30@gmail.com</p>
+            <p style="margin-top: 4px; opacity: 0.7;">&copy; 2026 Louies Angelo Mesia. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
